@@ -17,7 +17,7 @@
 
 ## ⬇️ Installation
 For installation, you have three options.
-1. Download the pre-built executable [here](https://github.com/bennett-sh/wemod-pro-unlocker/releases/latest/download/wemod-pro-unlocker.exe)
+1. Download the pre-built executable [here](https://github.com/DaBaival/wemod-pro-unlocker/releases/download/DaBai/wemod-pro-unlocker.exe)
 2. Install it using cargo: ```cargo install wemod-pro-unlocker```
 3. (not recommended) Manually build it from source
 
