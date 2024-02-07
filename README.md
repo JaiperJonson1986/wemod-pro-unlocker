@@ -38,5 +38,5 @@ This is probably because WeMod updated itself and now uses a new directory. To f
 
 ## 🫂 Contributors
 <a href="https://github.com/DaBaival/wemod-pro-unlocker/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=bennett-sh/wemod-pro-unlocker" />
+  <img src="https://contrib.rocks/image?repo=DaBaival/wemod-pro-unlocker" />
 </a>
