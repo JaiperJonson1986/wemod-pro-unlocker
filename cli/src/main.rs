@@ -100,8 +100,10 @@ fn main() -> std::io::Result<()> {
 
     println!(
         "Attempting to patch WeMod v{}...",
-        versions::get_version_from_path(wemod_version_folder)
+        versions::get_version_from_path(wemod_version_folder.clone())
     );
+
+    patches::patch_asar_integrity(wemod_version_folder.clone());
 
     println!("Extracting resources...");
 
