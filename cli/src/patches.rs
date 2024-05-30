@@ -117,3 +117,44 @@ pub fn patch_vendor_bundle(extracted_resource_dir: PathBuf) {
         break;
     }
 }
+
+pub fn patch_asar_integrity(wemod_version_folder: PathBuf) {
+    println!("Patching asar integrity...");
+
+    let wemod_exe = wemod_version_folder.join("WeMod.exe");
+    let wemod_exe_old = wemod_version_folder.join("WeMod.exe.old");
+    if wemod_exe_old.exists() {
+        fs::copy(&wemod_exe_old, &wemod_exe).expect("failed to copy WeMod.exe.old to WeMod.exe");
+    } else {
+        fs::copy(&wemod_exe, &wemod_exe_old).expect("failed to copy WeMod.exe to WeMod.exe.old");
+    }
+
+    let wemod_exe_contents = fs::read(&wemod_exe).expect("failed to read WeMod.exe");
+
+    let bypass_hex = vec![0x30, 0x30, 0x30, 0x30, 0x30, 0x31, 0x30, 0x31];
+    let old_hex = vec![0x30, 0x30, 0x30, 0x30, 0x31, 0x31, 0x30, 0x31];
+
+    let bypass_hex_pos = wemod_exe_contents.windows(8).position(|window| window == bypass_hex);
+    let old_hex_pos = wemod_exe_contents.windows(8).position(|window| window == old_hex);
+
+    if bypass_hex_pos.is_some() {
+        println!("Asar integrity already patched.");
+        return;
+    }
+
+    if old_hex_pos.is_none() {
+        println!("Failed to patch asar integrity.");
+        return;
+    }
+
+    let old_hex_pos = old_hex_pos.unwrap();
+
+    let mut wemod_exe_contents = wemod_exe_contents.to_vec();
+    for i in 0..8 {
+        wemod_exe_contents[old_hex_pos + i] = bypass_hex[i];
+    }
+
+    fs::write(&wemod_exe, wemod_exe_contents).expect("failed to write WeMod.exe");
+
+    println!("Done.");
+}
